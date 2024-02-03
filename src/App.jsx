@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Button, Modal, Box } from "@mui/material";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import "./App.css";
 
 const style = {
@@ -38,7 +39,12 @@ function App() {
                 src='./omnia-vu-logo.png'
               />
             </div>
-            <h2 className='sm:text-2xl text-sm font-bold'>Availability</h2>
+            <div className='flex gap-3'>
+              <button onClick={() => setOpen(false)}>
+                <ArrowBackIcon />
+              </button>
+              <h2 className='sm:text-2xl text-sm font-bold'>Availability</h2>
+            </div>
           </Box>
         </Modal>
       </main>
