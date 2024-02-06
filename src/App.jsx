@@ -3,6 +3,7 @@ import { Button, Modal, Box } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Calendar from "./components/Calendar";
 import "./App.css";
+import TimeTable from "./components/TimeTable";
 
 const style = {
   position: "absolute",
@@ -32,7 +33,10 @@ function App() {
         <Button variant='outlined' onClick={() => setOpen(!open)}>
           Book a room
         </Button>
-        <Modal open={open} onClose={() => setOpen(false)}>
+        <Modal
+          open={open}
+          onClose={() => setOpen(false)}
+          sx={{ overflow: "scroll" }}>
           <Box sx={{ ...style, width: 1000 }}>
             <div className='flex justify-end '>
               <img
@@ -46,11 +50,17 @@ function App() {
               </button>
               <h2 className='sm:text-2xl text-sm font-bold'>Availability</h2>
             </div>
-            <form method='post' className='flex flex-col items-center my-5'>
+            <form
+              onSubmit={(e) => e.preventDefault()}
+              className='flex flex-col items-center my-5'>
               <ul className='text-center text-xl font-bold '>
                 <li>
                   <label htmlFor='date'>Date</label>
                   <Calendar />
+                </li>
+                <li>
+                  <label htmlFor='time'>Time</label>
+                  <TimeTable />
                 </li>
               </ul>
             </form>
