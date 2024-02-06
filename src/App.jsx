@@ -62,6 +62,20 @@ function App() {
                   <label htmlFor='time'>Time</label>
                   <TimeTable />
                 </li>
+                <li className='flex flex-col'>
+                  <label htmlFor='email'>Email</label>
+                  <input
+                    type='email'
+                    id='email'
+                    name='email'
+                    placeholder='student@vu.nl'
+                  />
+                </li>
+                <li>
+                  <Button type='submit' value='submit' variant='contained'>
+                    Confirm
+                  </Button>
+                </li>
               </ul>
             </form>
           </Box>
