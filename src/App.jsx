@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button, Modal, Box } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import Calendar from "./components/Calendar";
 import "./App.css";
 
 const style = {
@@ -45,6 +46,14 @@ function App() {
               </button>
               <h2 className='sm:text-2xl text-sm font-bold'>Availability</h2>
             </div>
+            <form method='post' className='flex flex-col items-center my-5'>
+              <ul className='text-center text-xl font-bold '>
+                <li>
+                  <label htmlFor='date'>Date</label>
+                  <Calendar />
+                </li>
+              </ul>
+            </form>
           </Box>
         </Modal>
       </main>
