@@ -4,6 +4,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Calendar from "./components/Calendar";
 import "./App.css";
 import TimeTable from "./components/TimeTable";
+import Confirmation from "./components/Confirmation";
 
 const style = {
   position: "absolute",
@@ -72,9 +73,7 @@ function App() {
                   />
                 </li>
                 <li>
-                  <Button type='submit' value='submit' variant='contained'>
-                    Confirm
-                  </Button>
+                  <Confirmation style={style} />
                 </li>
               </ul>
             </form>
