@@ -1,7 +1,22 @@
 import { Button, Modal, Box } from "@mui/material";
 import { useState } from "react";
 
-const Confirmation = ({ style }) => {
+const confirmationModalStyle = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  bgcolor: "background.paper",
+  borderRadius: 5,
+  boxShadow: 24,
+  pt: 2,
+  px: 4,
+  pb: 3,
+  width: 500,
+  padding: 5,
+};
+
+const Confirmation = () => {
   const [confirmed, setConfirmed] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -16,7 +31,7 @@ const Confirmation = ({ style }) => {
       </Button>
       <Modal open={open} onClose={() => setOpen(false)}>
         <Box
-          sx={{ ...style, width: 500, padding: 5 }}
+          sx={{ ...confirmationModalStyle }}
           className='flex flex-col items-center my-5'>
           <h2 className='sm:text-2xl text-sm font-bold'>
             Your Booking Details
@@ -31,7 +46,7 @@ const Confirmation = ({ style }) => {
               </li>
             </ul>
             <img
-              src='/public/confirmation-icon.PNG'
+              src='/confirmation-icon.PNG'
               alt='confirmation-icon'
               className='w-14'
             />

@@ -67,7 +67,7 @@ const handleTimeSelection = () => {
 
 const TimeTable = () => {
   return (
-    <Box>
+    <Box className='mt-2.5'>
       <Grid container spacing={2}>
         {timeFrames.map((range, index) => {
           return (
