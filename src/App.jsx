@@ -20,7 +20,7 @@ const availabilityModalStyle = {
 
 function App() {
   const [open, setOpen] = useState(false);
-  const [availability, setAvailability] = useState(null);
+  const [availability, setAvailability] = useState([]);
   const [roomId, setRoomId] = useState(null);
 
   const getDateTimeAvailability = async () => {

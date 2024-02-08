@@ -6,16 +6,25 @@ import dayjs from "dayjs";
 
 const Calendar = ({ availability }) => {
   const [selectedDate, setSelectedDate] = useState(dayjs());
-  const twoYearsAhead = dayjs().add(2, "year");
+  const availableDates = availability.map(
+    (availabilities) => availabilities.date
+  );
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DateCalendar
         value={selectedDate}
         onChange={(newDate) => setSelectedDate(newDate)}
-        minDate={dayjs()}
-        maxDate={twoYearsAhead}
-        disablePast
+        minDate={dayjs().subtract(1, "month")}
+        maxDate={dayjs().add(2, "year")}
+        shouldDisableDate={(dateParam) => {
+          const dateInFocus = dateParam
+            // TODO: figure out why dateParam is 1 day in the past
+            .add(1, "day")
+            .toISOString()
+            .split("T")[0];
+          return !availableDates.includes(dateInFocus);
+        }}
       />
     </LocalizationProvider>
   );
