@@ -65,7 +65,7 @@ const handleTimeSelection = () => {
   console.log("picked time");
 };
 
-const TimeTable = () => {
+const TimeTable = ({ availability }) => {
   return (
     <Box className='mt-2.5'>
       <Grid container spacing={2}>

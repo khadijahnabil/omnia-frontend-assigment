@@ -4,7 +4,7 @@ import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
 import { useState } from "react";
 import dayjs from "dayjs";
 
-const Calendar = () => {
+const Calendar = ({ availability }) => {
   const [selectedDate, setSelectedDate] = useState(dayjs());
   const twoYearsAhead = dayjs().add(2, "year");
 

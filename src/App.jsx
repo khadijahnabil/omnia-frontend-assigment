@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Modal, Box } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Calendar from "./components/Calendar";
@@ -20,6 +20,25 @@ const availabilityModalStyle = {
 
 function App() {
   const [open, setOpen] = useState(false);
+  const [availability, setAvailability] = useState(null);
+  const [roomId, setRoomId] = useState(null);
+
+  const getDateTimeAvailability = async () => {
+    try {
+      const response = await fetch(
+        "https://rzssj8nj3c.execute-api.eu-central-1.amazonaws.com"
+      );
+      const { availability, room_id: id } = await response.json();
+      setAvailability(availability);
+      setRoomId(id);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getDateTimeAvailability();
+  }, []);
 
   return (
     <div className='flex flex-col h-screen'>
@@ -31,7 +50,7 @@ function App() {
       </header>
       <main className='flex items-center justify-center flex-1'>
         <Button variant='outlined' onClick={() => setOpen(!open)}>
-          Book a room
+          Book room {roomId}
         </Button>
         <Modal
           open={open}
@@ -57,11 +76,11 @@ function App() {
                 <ul className='text-center text-xl font-bold '>
                   <li>
                     <label htmlFor='date'>Date</label>
-                    <Calendar />
+                    <Calendar availability={availability} />
                   </li>
                   <li>
                     <label htmlFor='time'>Time</label>
-                    <TimeTable />
+                    <TimeTable availability={availability} />
                   </li>
                   <li className='flex flex-col'>
                     <label htmlFor='email' className='mt-12'>
