@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Button, Modal, Box } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import dayjs from "dayjs";
 import Calendar from "./components/Calendar";
 import "./App.css";
 import TimeTable from "./components/TimeTable";
@@ -22,6 +23,7 @@ function App() {
   const [open, setOpen] = useState(false);
   const [availability, setAvailability] = useState([]);
   const [roomId, setRoomId] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(dayjs());
 
   const getDateTimeAvailability = async () => {
     try {
@@ -76,7 +78,11 @@ function App() {
                 <ul className='text-center text-xl font-bold '>
                   <li>
                     <label htmlFor='date'>Date</label>
-                    <Calendar availability={availability} />
+                    <Calendar
+                      availability={availability}
+                      selectedDate={selectedDate}
+                      getSelectedDate={(newDate) => setSelectedDate(newDate)}
+                    />
                   </li>
                   <li>
                     <label htmlFor='time'>Time</label>

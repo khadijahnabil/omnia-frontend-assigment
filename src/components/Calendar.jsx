@@ -1,11 +1,9 @@
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
-import { useState } from "react";
 import dayjs from "dayjs";
 
-const Calendar = ({ availability }) => {
-  const [selectedDate, setSelectedDate] = useState(dayjs());
+const Calendar = ({ availability, selectedDate, getSelectedDate }) => {
   const availableDates = availability.map(
     (availabilities) => availabilities.date
   );
@@ -14,7 +12,7 @@ const Calendar = ({ availability }) => {
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DateCalendar
         value={selectedDate}
-        onChange={(newDate) => setSelectedDate(newDate)}
+        onChange={getSelectedDate}
         minDate={dayjs().subtract(1, "month")}
         maxDate={dayjs().add(2, "year")}
         shouldDisableDate={(dateParam) => {
