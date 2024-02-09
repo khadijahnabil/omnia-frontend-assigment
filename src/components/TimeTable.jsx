@@ -78,6 +78,7 @@ const TimeTable = ({ availability, selectedDate }) => {
   const availableHours = getTimeAvailability(availability, formattedDate);
 
   const toHourlyAvailabilityRanges = (availableHours) => {
+    if (!availableHours) return [];
     const availableHoursInt = availableHours.map((hour) => {
       return {
         start_time: parseInt(hour.start_time),
