@@ -86,7 +86,10 @@ function App() {
                   </li>
                   <li>
                     <label htmlFor='time'>Time</label>
-                    <TimeTable availability={availability} />
+                    <TimeTable
+                      availability={availability}
+                      selectedDate={selectedDate}
+                    />
                   </li>
                   <li className='flex flex-col'>
                     <label htmlFor='email' className='mt-12'>

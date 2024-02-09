@@ -1,6 +1,7 @@
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
+import { Button } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 const timeFrames = [
@@ -65,7 +66,61 @@ const handleTimeSelection = () => {
   console.log("picked time");
 };
 
-const TimeTable = ({ availability }) => {
+const TimeTable = ({ availability, selectedDate }) => {
+  const formattedDate = selectedDate.format("YYYY-MM-DD");
+
+  const getTimeAvailability = (availabilityData, formattedDate) => {
+    return availabilityData.find(
+      (availabilities) => availabilities.date === formattedDate
+    )?.available_hours;
+  };
+
+  const availableHours = getTimeAvailability(availability, formattedDate);
+
+  const toHourlyAvailabilityRanges = (availableHours) => {
+    const availableHoursInt = availableHours.map((hour) => {
+      return {
+        start_time: parseInt(hour.start_time),
+        end_time: parseInt(hour.end_time),
+      };
+    });
+    const hoursTimeFrame = availableHoursInt.map(
+      (hour) => hour.end_time - hour.start_time
+    );
+
+    let hourRangesInt = [];
+
+    for (let i = 0; i <= availableHoursInt.length; i++) {
+      for (let j = 1; j <= hoursTimeFrame[i]; j++) {
+        hourRangesInt.push({
+          start_time: availableHoursInt[i].start_time + (j - 1),
+          end_time: availableHoursInt[i].start_time + j,
+        });
+      }
+    }
+
+    return hourRangesInt
+      .map((hour) => {
+        return {
+          start_time: `${hour.start_time}:00`,
+          end_time: `${hour.end_time}:00`,
+        };
+      })
+      .map((hour) => {
+        let sTime = hour.start_time;
+        let eTime = hour.end_time;
+        if (sTime.length === 4) {
+          sTime = `0${sTime}`;
+        }
+        if (eTime.length === 4) {
+          eTime = `0${eTime}`;
+        }
+        return { start_time: sTime, end_time: eTime };
+      });
+  };
+
+  const hourlyAvRanges = toHourlyAvailabilityRanges(availableHours);
+
   return (
     <Box className='mt-2.5'>
       <Grid container spacing={2}>
@@ -73,9 +128,17 @@ const TimeTable = ({ availability }) => {
           return (
             <Grid item xs={4} key={index}>
               <Item>
-                <button onClick={handleTimeSelection}>
+                <Button
+                  onClick={handleTimeSelection}
+                  disabled={
+                    !hourlyAvRanges.some(
+                      (r) =>
+                        r.start_time === range.start_time &&
+                        r.end_time === range.end_time
+                    )
+                  }>
                   {range.start_time} - {range.end_time}
-                </button>
+                </Button>
               </Item>
             </Grid>
           );
