@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+.Toastify__toast--error {
+  font-size: 18px;
+  font-weight: 100;
+}
+
 li {
   max-width: 25rem;
 }

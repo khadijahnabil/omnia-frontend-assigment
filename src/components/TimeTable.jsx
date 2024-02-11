@@ -1,9 +1,9 @@
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import Paper from "@mui/material/Paper";
 import { Button } from "@mui/material";
-import { styled } from "@mui/material/styles";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
+import { Bounce, ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const timeFrames = [
   { id: 1, end_time: "09:00", start_time: "08:00" },
@@ -19,13 +19,6 @@ const timeFrames = [
   { id: 11, end_time: "19:00", start_time: "18:00" },
   { id: 12, end_time: "20:00", start_time: "19:00" },
 ];
-
-const Item = styled(Paper)(({ theme }) => ({
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: "center",
-  color: theme.palette.text.secondary,
-}));
 
 const TimeTable = ({
   availability,
@@ -92,17 +85,30 @@ const TimeTable = ({
 
   const hourlyAvRanges = toHourlyAvailabilityRanges(availableHours);
 
+  const showErrorMessage = () =>
+    toast.error("Please select up to 2 adjacent time slots only.", {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Bounce,
+    });
+
   const handleTimeSelection = (range) => {
     getSelectedTime((prevState) => {
       if (prevState.map((x) => x.id).includes(range.id)) {
         return [...prevState.filter((state) => state.id !== range.id)];
       }
       if (prevState.length >= 2) {
-        console.log("cannot add more time, maximum 2");
+        showErrorMessage();
         return [...prevState];
       }
       if (range.id > prevState[0]?.id + 1 || range.id < prevState[0]?.id - 1) {
-        console.log("please select 2 max time slots next to each other");
+        showErrorMessage();
         return [...prevState];
       }
       return [...prevState, range];
@@ -135,6 +141,20 @@ const TimeTable = ({
             </Grid>
           );
         })}
+        <ToastContainer
+          position='top-center'
+          autoClose={3000}
+          hideProgressBar
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme='light'
+          transition={Bounce}
+          className='Toastify__toast--error'
+        />
       </Grid>
     </Box>
   );
