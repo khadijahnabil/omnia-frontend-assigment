@@ -24,6 +24,7 @@ function App() {
   const [availability, setAvailability] = useState([]);
   const [roomId, setRoomId] = useState(null);
   const [selectedDate, setSelectedDate] = useState(dayjs());
+  const [selectedTime, setSelectedTime] = useState([]);
 
   const getDateTimeAvailability = async () => {
     try {
@@ -89,6 +90,8 @@ function App() {
                     <TimeTable
                       availability={availability}
                       selectedDate={selectedDate}
+                      selectedTime={selectedTime}
+                      getSelectedTime={(newTime) => setSelectedTime(newTime)}
                     />
                   </li>
                   <li className='flex flex-col'>

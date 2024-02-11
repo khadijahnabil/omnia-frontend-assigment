@@ -27,12 +27,16 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-const TimeTable = ({ availability, selectedDate }) => {
-  const [buttonsPressed, setButtonsPressed] = useState([]);
+const TimeTable = ({
+  availability,
+  selectedDate,
+  selectedTime,
+  getSelectedTime,
+}) => {
   const formattedDate = selectedDate.format("YYYY-MM-DD");
 
   useEffect(() => {
-    setButtonsPressed([]);
+    getSelectedTime([]);
   }, [selectedDate]);
 
   const getTimeAvailability = (availabilityData, formattedDate) => {
@@ -89,7 +93,7 @@ const TimeTable = ({ availability, selectedDate }) => {
   const hourlyAvRanges = toHourlyAvailabilityRanges(availableHours);
 
   const handleTimeSelection = (range) => {
-    setButtonsPressed((prevState) => {
+    getSelectedTime((prevState) => {
       if (prevState.map((x) => x.id).includes(range.id)) {
         return [...prevState.filter((state) => state.id !== range.id)];
       }
@@ -113,8 +117,8 @@ const TimeTable = ({ availability, selectedDate }) => {
             <Grid item xs={4} key={range.id}>
               <Button
                 variant={
-                  buttonsPressed[0]?.id === range.id ||
-                  buttonsPressed[1]?.id === range.id
+                  selectedTime[0]?.id === range.id ||
+                  selectedTime[1]?.id === range.id
                     ? "contained"
                     : "outlined"
                 }
