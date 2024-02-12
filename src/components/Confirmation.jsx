@@ -13,6 +13,22 @@ const Confirmation = ({
 
   const formattedDate = selectedDate.format("dddd, MMMM	D");
 
+  const findMinMaxTimes = (selectedTime) => {
+    const startTimes = selectedTime.map((range) => parseInt(range.start_time));
+    const endTimes = selectedTime.map((range) => parseInt(range.end_time));
+
+    let minTime = Math.min(...startTimes).toString();
+    let maxTime = Math.max(...endTimes).toString();
+
+    if (minTime.length === 1) {
+      minTime = `0${minTime}`;
+    }
+    if (maxTime.length === 1) {
+      maxTime = `0${maxTime}`;
+    }
+    return `${minTime}:00 - ${maxTime}:00`;
+  };
+
   return (
     <>
       <Button
@@ -41,8 +57,7 @@ const Confirmation = ({
                 <strong>Date:</strong> {formattedDate}
               </li>
               <li>
-                <strong>Time:</strong> {selectedTime[0]?.start_time}-
-                {selectedTime[1]?.end_time || selectedTime[0]?.end_time}
+                <strong>Time:</strong> {findMinMaxTimes(selectedTime)}
               </li>
             </ul>
             <img
