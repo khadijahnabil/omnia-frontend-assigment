@@ -130,7 +130,12 @@ function App() {
                     />
                   </li>
                   <li className='mt-2.5'>
-                    <Confirmation isEmailValid={isEmailValid} />
+                    <Confirmation
+                      isEmailValid={isEmailValid}
+                      selectedDate={selectedDate}
+                      selectedTime={selectedTime}
+                      userEmail={userEmail}
+                    />
                   </li>
                 </ul>
               </form>

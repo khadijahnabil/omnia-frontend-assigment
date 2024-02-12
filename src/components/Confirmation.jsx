@@ -16,14 +16,21 @@ const confirmationModalStyle = {
   padding: 5,
 };
 
-const Confirmation = ({ isEmailValid }) => {
+const Confirmation = ({
+  isEmailValid,
+  selectedDate,
+  selectedTime,
+  userEmail,
+}) => {
   const [confirmed, setConfirmed] = useState(false);
   const [open, setOpen] = useState(false);
+
+  const formattedDate = selectedDate.format("dddd, MMMM	D");
 
   return (
     <>
       <Button
-        disabled={!isEmailValid ? true : false}
+        disabled={!isEmailValid || selectedTime.length <= 0 ? true : false}
         type='submit'
         value='submit'
         variant='contained'
@@ -40,10 +47,14 @@ const Confirmation = ({ isEmailValid }) => {
           <div className='flex flex-row items-center gap-8 my-6'>
             <ul>
               <li>
-                <strong>Date:</strong> Monday, March 2nd 2024
+                <strong>Email:</strong> {userEmail}
               </li>
               <li>
-                <strong>Time:</strong> 10:00 - 11:00
+                <strong>Date:</strong> {formattedDate}
+              </li>
+              <li>
+                <strong>Time:</strong> {selectedTime[0]?.start_time}-
+                {selectedTime[1]?.end_time || selectedTime[0]?.end_time}
               </li>
             </ul>
             <img
