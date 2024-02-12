@@ -28,7 +28,7 @@ function App() {
   const [selectedDate, setSelectedDate] = useState(dayjs());
   const [selectedTime, setSelectedTime] = useState([]);
   const [userEmail, setUserEmail] = useState("");
-  const [isEmailValid, setIsEmailValid] = useState(false);
+  const [isEmailValid, setIsEmailValid] = useState(null);
 
   const getDateTimeAvailability = async () => {
     try {
@@ -49,7 +49,11 @@ function App() {
 
   const validateUserEmail = (value) => {
     setUserEmail(value);
-    return validator.isEmail(value) && value.endsWith("@vu.nl")
+    if (value === "") {
+      setIsEmailValid(null);
+      return;
+    }
+    validator.isEmail(value) && value.endsWith("@vu.nl")
       ? setIsEmailValid(true)
       : setIsEmailValid(false);
   };
@@ -110,7 +114,7 @@ function App() {
                       Email
                     </label>
                     <TextField
-                      error={!isEmailValid}
+                      error={isEmailValid === false}
                       required
                       id='email'
                       type='email'
@@ -118,14 +122,14 @@ function App() {
                       InputProps={{ disableUnderline: true }}
                       onBlur={() => validateUserEmail(userEmail)}
                       helperText={
-                        !isEmailValid ? "Enter a @vu.nl account" : " "
+                        isEmailValid === false ? "Enter a @vu.nl account" : " "
                       }
                       value={userEmail}
                       onChange={(e) => validateUserEmail(e.target.value)}
                       placeholder='student@vu.nl'
                     />
                   </li>
-                  <li className='mt-6'>
+                  <li className='mt-2.5'>
                     <Confirmation isEmailValid={isEmailValid} />
                   </li>
                 </ul>
