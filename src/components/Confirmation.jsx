@@ -17,13 +17,13 @@ const confirmationModalStyle = {
 };
 
 const Confirmation = ({
+  setOpenAvailabilityModal,
   isEmailValid,
   selectedDate,
   selectedTime,
   userEmail,
 }) => {
-  const [confirmed, setConfirmed] = useState(false);
-  const [open, setOpen] = useState(false);
+  const [openConfirmationModal, setOpenConfirmationModal] = useState(false);
 
   const formattedDate = selectedDate.format("dddd, MMMM	D");
 
@@ -34,10 +34,12 @@ const Confirmation = ({
         type='submit'
         value='submit'
         variant='contained'
-        onClick={() => setOpen(true)}>
+        onClick={() => setOpenConfirmationModal(true)}>
         Confirm
       </Button>
-      <Modal open={open} onClose={() => setOpen(false)}>
+      <Modal
+        open={openConfirmationModal}
+        onClose={() => setOpenAvailabilityModal(false)}>
         <Box
           sx={{ ...confirmationModalStyle }}
           className='flex flex-col items-center my-5'>
@@ -68,7 +70,9 @@ const Confirmation = ({
           </p>
           <div className='flex flex-row items-center gap-8 mt-6'>
             <Button>Share</Button>
-            <Button onClick={() => setOpen(false)}>Homepage</Button>
+            <Button onClick={() => setOpenAvailabilityModal(false)}>
+              Homepage
+            </Button>
           </div>
         </Box>
       </Modal>

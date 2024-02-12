@@ -22,7 +22,7 @@ const availabilityModalStyle = {
 };
 
 function App() {
-  const [open, setOpen] = useState(false);
+  const [openAvailabilityModal, setOpenAvailabilityModal] = useState(false);
   const [availability, setAvailability] = useState([]);
   const [roomId, setRoomId] = useState(null);
   const [selectedDate, setSelectedDate] = useState(dayjs());
@@ -67,12 +67,14 @@ function App() {
         <img className='object-scale-down' src='./omnia-vu-logo.png' />
       </header>
       <main className='flex items-center justify-center flex-1'>
-        <Button variant='outlined' onClick={() => setOpen(!open)}>
+        <Button
+          variant='outlined'
+          onClick={() => setOpenAvailabilityModal(!openAvailabilityModal)}>
           Book room {roomId}
         </Button>
         <Modal
-          open={open}
-          onClose={() => setOpen(false)}
+          open={openAvailabilityModal}
+          onClose={() => setOpenAvailabilityModal(false)}
           sx={{ overflow: "scroll" }}>
           <div className='flex justify-center'>
             <Box sx={{ ...availabilityModalStyle }}>
@@ -83,7 +85,7 @@ function App() {
                 />
               </div>
               <div className='flex gap-3'>
-                <button onClick={() => setOpen(false)}>
+                <button onClick={() => setOpenAvailabilityModal(false)}>
                   <ArrowBackIcon />
                 </button>
                 <h2 className='sm:text-2xl text-sm font-bold'>Availability</h2>
@@ -131,6 +133,7 @@ function App() {
                   </li>
                   <li className='mt-2.5'>
                     <Confirmation
+                      setOpenAvailabilityModal={setOpenAvailabilityModal}
                       isEmailValid={isEmailValid}
                       selectedDate={selectedDate}
                       selectedTime={selectedTime}
