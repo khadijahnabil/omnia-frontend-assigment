@@ -16,13 +16,14 @@ const confirmationModalStyle = {
   padding: 5,
 };
 
-const Confirmation = () => {
+const Confirmation = ({ isEmailValid }) => {
   const [confirmed, setConfirmed] = useState(false);
   const [open, setOpen] = useState(false);
 
   return (
     <>
       <Button
+        disabled={!isEmailValid ? true : false}
         type='submit'
         value='submit'
         variant='contained'

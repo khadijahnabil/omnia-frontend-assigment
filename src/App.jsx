@@ -6,6 +6,8 @@ import Calendar from "./components/Calendar";
 import "./App.css";
 import TimeTable from "./components/TimeTable";
 import Confirmation from "./components/Confirmation";
+import TextField from "@mui/material/TextField";
+import validator from "validator";
 
 const availabilityModalStyle = {
   bgcolor: "background.paper",
@@ -25,6 +27,8 @@ function App() {
   const [roomId, setRoomId] = useState(null);
   const [selectedDate, setSelectedDate] = useState(dayjs());
   const [selectedTime, setSelectedTime] = useState([]);
+  const [userEmail, setUserEmail] = useState("");
+  const [isEmailValid, setIsEmailValid] = useState(false);
 
   const getDateTimeAvailability = async () => {
     try {
@@ -42,6 +46,13 @@ function App() {
   useEffect(() => {
     getDateTimeAvailability();
   }, []);
+
+  const validateUserEmail = (value) => {
+    setUserEmail(value);
+    return validator.isEmail(value) && value.endsWith("@vu.nl")
+      ? setIsEmailValid(true)
+      : setIsEmailValid(false);
+  };
 
   return (
     <div className='flex flex-col h-screen'>
@@ -98,15 +109,24 @@ function App() {
                     <label htmlFor='email' className='mt-12'>
                       Email
                     </label>
-                    <input
-                      type='email'
+                    <TextField
+                      error={!isEmailValid}
+                      required
                       id='email'
-                      name='email'
+                      type='email'
+                      variant='standard'
+                      InputProps={{ disableUnderline: true }}
+                      onBlur={() => validateUserEmail(userEmail)}
+                      helperText={
+                        !isEmailValid ? "Enter a @vu.nl account" : " "
+                      }
+                      value={userEmail}
+                      onChange={(e) => validateUserEmail(e.target.value)}
                       placeholder='student@vu.nl'
                     />
                   </li>
-                  <li>
-                    <Confirmation />
+                  <li className='mt-6'>
+                    <Confirmation isEmailValid={isEmailValid} />
                   </li>
                 </ul>
               </form>
