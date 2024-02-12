@@ -1,20 +1,6 @@
 import { Button, Modal, Box } from "@mui/material";
 import { useState } from "react";
-
-const confirmationModalStyle = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  bgcolor: "background.paper",
-  borderRadius: 5,
-  boxShadow: 24,
-  pt: 2,
-  px: 4,
-  pb: 3,
-  width: 500,
-  padding: 5,
-};
+import { confirmationModalStyle } from "./utils/styling";
 
 const Confirmation = ({
   setOpenAvailabilityModal,

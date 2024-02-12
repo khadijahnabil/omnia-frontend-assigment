@@ -8,18 +8,8 @@ import TimeTable from "./components/TimeTable";
 import Confirmation from "./components/Confirmation";
 import TextField from "@mui/material/TextField";
 import validator from "validator";
-
-const availabilityModalStyle = {
-  bgcolor: "background.paper",
-  borderRadius: 5,
-  boxShadow: 24,
-  pt: 2,
-  px: 4,
-  pb: 3,
-  marginTop: "50px",
-  marginBottom: "50px",
-  width: 1000,
-};
+import { APIurl } from "./components/utils/constants";
+import { availabilityModalStyle } from "./components/utils/styling";
 
 function App() {
   const [openAvailabilityModal, setOpenAvailabilityModal] = useState(false);
@@ -32,9 +22,7 @@ function App() {
 
   const getDateTimeAvailability = async () => {
     try {
-      const response = await fetch(
-        "https://rzssj8nj3c.execute-api.eu-central-1.amazonaws.com"
-      );
+      const response = await fetch(APIurl);
       const { availability, room_id: id } = await response.json();
       setAvailability(availability);
       setRoomId(id);
